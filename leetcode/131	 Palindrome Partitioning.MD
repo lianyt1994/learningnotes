@@ -9,7 +9,7 @@ Output:
 [
   ["aa","b"],
   ["a","a","b"]
-]
+]<br>
 整体思路：采用回溯的算法
 ```java
 public class Solution {
@@ -35,7 +35,7 @@ public class Solution {
 	                else
 	                    currLst.add(s.substring(l,i+1));
 	                backTrack(s,i+1);
-                  //跳出递归后就把最后一个删了，再进行递归
+                  	//跳出递归后就把最后一个删了，再进行循环
 	                currLst.remove(currLst.size()-1);
 	            }
 	        }
