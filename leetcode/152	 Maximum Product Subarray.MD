@@ -22,6 +22,7 @@ int maxProduct(int A[], int n) {
         // multiplied by a negative makes big number smaller, small number bigger
         // so we redefine the extremums by swapping them
         if (A[i] < 0)
+            //不能在别的方法里改
             swap(imax, imin);
 
         // max/min product for the current number is either the current number itself
