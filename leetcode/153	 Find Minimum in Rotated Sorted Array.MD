@@ -13,7 +13,7 @@ Output: 1
 Example 2:
 
 Input: [4,5,6,7,0,1,2]
-Output: 0
+Output: 0 
 ```java
 public class Solution {
     public int findMin(int[] num) {
