@@ -18,8 +18,8 @@ X O X X
 Explanation:
 
 Surrounded regions shouldn’t be on the border, which means that any 'O' on the border of the board are not flipped to 'X'. Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. Two cells are connected if they are adjacent cells connected horizontally or vertically.
-
-//整体思路：把不被包围的用另一个符号表示，bfs，把原来的O变成X，最后再把O换回来
+<br>BFS一般通过队列来实现，遍历过的可以用visited来表示，也可以直接改成别的图案<br>
+把不被包围的用另一个符号表示，DFS，把原来的O变成X，最后再把O换回来
 ```JAVA
 class Solution {
     public void solve(char[][] board) {
@@ -70,4 +70,70 @@ private void boundaryDFS(char[][] board, int i, int j) {
 }
 }
 ```
- 
+ BFS
+```JAVA
+public class Solution {
+    class Node{
+        int row;
+        int col;
+        Node(int x,int y){
+            row = x;col = y;
+        }
+    }
+    public void solve(char[][] board) {
+        int rowLen = board.length;
+        if(rowLen<=0)
+            return;
+        int colLen = board[0].length;
+        if(colLen<=0)
+            return;
+
+
+        int[][] visited = new int[rowLen][colLen];
+        Queue<Node> queue = new LinkedList<>();
+
+        for(int row = 0;row<rowLen;row++)
+            for(int col = 0;col<colLen;col++)
+                visited[row][col] = 0;
+
+        for(int row = 0;row<rowLen;row++)
+        {
+            if(board[row][0]=='O')
+                queue.offer(new Node(row,0));
+            if(board[row][colLen-1] == 'O')
+                queue.offer(new Node(row,colLen-1));
+        }
+        for(int col = 0;col<colLen;col++){
+            if(board[0][col]=='O')
+                queue.offer(new Node(0,col));
+            if(board[rowLen-1][col]=='O')
+                queue.offer(new Node(rowLen-1,col));
+        }
+         while(!queue.isEmpty()){
+                Node top = queue.poll();
+                int rowrow = top.row;
+                int colcol = top.col;
+                if(visited[rowrow][colcol] == 1)
+                    continue;
+
+                visited[rowrow][colcol] = 1;
+
+                if(rowrow+1<rowLen && board[rowrow+1][colcol] == 'O' && visited[rowrow+1][colcol] == 0)
+                    queue.offer(new Node(rowrow+1,colcol));
+                if(rowrow-1>=0 && board[rowrow-1][colcol] == 'O' && visited[rowrow-1][colcol] == 0)
+                    queue.offer(new Node(rowrow-1,colcol));
+                if(colcol+1<colLen && board[rowrow][colcol+1] == 'O' && visited[rowrow][colcol+1] == 0)
+                    queue.offer(new Node(rowrow,colcol+1));
+                if(colcol-1>=0 && board[rowrow][colcol-1] == 'O' && visited[rowrow][colcol-1] == 0)
+                    queue.offer(new Node(rowrow,colcol-1));
+            }
+        for(int row = 0;row<rowLen;row++){
+            for(int col = 0;col<colLen;col++){
+                if(board[row][col] == 'O' && visited[row][col] == 0)
+                    board[row][col] = 'X';
+            }
+        }
+    }
+}
+
+```
