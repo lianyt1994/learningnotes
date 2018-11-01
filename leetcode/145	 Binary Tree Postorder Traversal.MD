@@ -56,4 +56,36 @@ public List<Integer> postorderTraversal(TreeNode root) {
     return result;
 }
 ```
- 
+后序遍历求树高
+```c++
+int BT_high(BiTree T) 
+{ 
+    BiTree p=T,r=NULL; 
+    int max=0;                                     //树高 
+    stack<BiTree> s; 
+    while(p||!s.empty()) 
+    { 
+        if(p!=NULL) 
+        { 
+            s.push(p); 
+            p=p->lchild; 
+        } 
+        else 
+        { 
+            p=s.top(); 
+            if(p->rchild!=NULL && p->rchild!=r) 
+                p=p->rchild; 
+            else 
+            { 
+                if(s.size()>max) max=s.size();//最大层次即为高度 
+                //如果右边为空或者访问过了，就可以把这个top弹掉，但要记录为上一个结点
+                r=p; 
+                s.pop(); 
+                //指针记为空，让它再去找stack之前的
+                p=NULL; 
+            } 
+        } 
+    } 
+    return max; 
+}
+```
