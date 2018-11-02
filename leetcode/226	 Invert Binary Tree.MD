@@ -71,3 +71,21 @@ public class Solution {
     }
 }
 ```
+```java
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        swap(root);
+        invertTree(root.right);
+        invertTree(root.left);
+        return root;
+    }
+    void swap(TreeNode p){
+        TreeNode left = p.left;
+        p.left = p.right;
+        p.right = left;
+    }
+}
+```
