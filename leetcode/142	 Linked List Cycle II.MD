@@ -14,29 +14,27 @@ Given a linked list, return the node where the cycle begins. If there is no cycl
  */
 public class Solution {
     public ListNode detectCycle(ListNode head) {
-        if(head==null || head.next==null)return null;
-        ListNode fast = head.next.next;
-        ListNode slow = head.next;
-        
-        while(fast!=null && fast.next!=null && fast!=slow){
-            slow = slow.next;
+        ListNode slow = head;
+        ListNode fast = head;
+
+        //如果走到空就说明没有交点
+        while (fast!=null && fast.next!=null){
             fast = fast.next.next;
-        }
-        
-        if(fast ==slow ){
-            //从头开始
-            fast = head;
-            while(fast != slow){
-                fast = fast.next;
-                slow = slow.next;
+            slow = slow.next;
+
+            //如果两个节点相等，就说明有交点，break出来
+            if (fast == slow){
+                ListNode slow2 = head; 
+                while (slow2 != slow){
+                    slow = slow.next;
+                    slow2 = slow2.next;
+                }
+                return slow;
             }
-            return fast;
-        }else{
-            return null;
         }
-        
-        
+        return null;
     }
 }
+
 ```
  
