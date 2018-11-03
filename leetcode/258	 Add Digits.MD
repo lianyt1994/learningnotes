@@ -1,7 +1,8 @@
 ```java
 class Solution {
     public int addDigits(int num) {
-        return (num%9 != 0 || num == 0) ? num%9 : 9;
+        if(num==0)return 0;
+        return (num%9 != 0 ) ? num%9 : 9;
     }
 }
 ```
