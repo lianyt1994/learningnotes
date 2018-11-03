@@ -1,4 +1,4 @@
-回溯的方法
+递归回来的方法
 ```java
 public List<String> binaryTreePaths(TreeNode root) {
         
