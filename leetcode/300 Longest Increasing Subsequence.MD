@@ -36,6 +36,7 @@ public int lengthOfLIS(int[] nums) {
         int i = 0, j = size;
         while (i != j) {
             int m = (i + j) / 2;
+            //这样可以保证相等的时候是往左移，最后返回的是最左边的那个
             if (tails[m] < x)
                 i = m + 1;
             else
