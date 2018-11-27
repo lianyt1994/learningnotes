@@ -19,3 +19,4 @@ public ListNode rotateRight(ListNode head, int n) {
     return dummy.next;
 }
 ```
+ 
