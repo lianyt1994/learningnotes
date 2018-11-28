@@ -80,8 +80,7 @@ public class Solution {
         private boolean dfs(ArrayList[] graph, boolean[] visited, int course){
             if(visited[course])
                 return false;
-            else
-                visited[course] = true;;
+            visited[course] = true;;
             //在这里如果一个也不需要先访问的话就直接把visited改为false，返回true
             for(int i=0; i<graph[course].size();i++){
                 if(!dfs(graph,visited,(int)graph[course].get(i)))
