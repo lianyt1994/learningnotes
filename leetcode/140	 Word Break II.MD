@@ -2,7 +2,7 @@
 ```java
 public class Solution {
     HashMap<String,List<String>> map = new HashMap<String,List<String>>();
-    public List<String> wordBreak(String s, Set<String> wordDict) {
+    public List<String> wordBreak(String s, List<String> wordDict) {
         List<String> res = new ArrayList<String>();
         if(s == null || s.length() == 0) {
             return res;
