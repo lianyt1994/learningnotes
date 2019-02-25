@@ -1,0 +1,1756 @@
+fastdfs启动命令：tracker: 		/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf restart
+/usr/bin/fdfs_storaged /etc/fdfs/storage.conf restart
+
+##### nginx
+* 配置 /etc/nginx/nginx.conf
+* 启动 nginx
+* 重启 nginx -s reload
+
+##### mysql
+* 账号 root
+* 密码 
+* 端口 3306
+* 启动客户端 mysql -uroot -p123456
+
+##### redis
+* 启动客户端 redis-cli
+
+##### tomcat
+* 路径 /usr/share/tomcat
+* 启动 tomcat start 
+* 停止 tomcat stop
+
+输入yum install lrzsz下载上传下载文件
+
+# 虚拟机说明文档
+VirtualBox-5.1.22
+虚拟机系统 centos7.3
+账号 root
+密码 123456
+#### 包括软件
+* jdk 1.8.0_111
+* nginx 1.11.7
+* mysql 5.7.17
+* redis 3.2.8
+
+##### jdk
+* 路径 /usr/local/jdk1.8.0_111
+
+##### nginx
+* 路径 /usr/local/nginx
+* 启动 nginx
+* 重启 nginx -s reload
+
+##### mysql
+* 配置 /etc/my.conf
+* 账号 root
+* 密码 123456
+* 端口 3306
+* 启动 systemctl start mysqld
+* 停止 systemctl stop mysqld
+* 启动客户端 mysql -uroot -p123456
+
+##### redis
+* 路径 /usr/local/redis
+* 配置 /etc/reis.conf
+* 端口 6379
+* 密码 123456
+* 启动 systemctl start redis
+* 停止 systemctl stop redis
+* 启动客户端 redis-cli
+
+##### tomcat
+* 启动 systemctl start tomcat
+* 停止 systemctl stop tomcat
+
+输入yum install lrzsz下载上传下载文件
+
+笔记
+classpath：只会到你的class路径中查找文件;
+classpath*：不仅包含class路径，还包括jar文件中(class路径)进行查找。
+
+lib和classes同属classpath，两者的访问优先级为: lib>classes。
+
+用sqlSessionFactoryBeanName 后处理，防止dataSource还没加载配置文件
+
+@Resource默认按照名称方式进行bean匹配，@Autowired默认按照类型方式进行bean匹配
+@Resource(import javax.annotation.Resource;)是J2EE的注解，
+@Autowired(import org.springframework.beans.factory.annotation.Autowired;)是Spring的注解
+有多个的话，使用的@Autowired注解，要配上@Qualifier("manImpl")
+
+date.getTime()可以获取long值
+
+1.对对象的统一管理
+2.规范的生命周期
+3.aop
+
+连接数据库出现权限异常
+	1.创建数据库
+	create database test;
+
+
+	2.远程连接数据库时报错：
+	The specified user/password combination is rejected: 
+
+	[28000][1045] Access denied for user 'test'@'%' (using password: YES)
+
+	创建完数据库后,用户需要授权.
+
+
+	3.授权命令
+	grant all on test.* to 'test'@'%' identified by '123456' with grant option;
+	第一个test是数据库名,第二个test是账户名,123456是密码.
+	
+Cannot instantiate object of type org.mybatis.generator.plugins.page.PaginationPlugin
+
+
+JedisConnectionException: java.net.ConnectException: Connection refused
+	bind的问题. 把Redis的配置文件redis.conf里
+		#bind localhost 	注释掉它.
+	注释掉本机,局域网内的所有计算机都能访问.
+	band localhost   只能本机访问,局域网内计算机不能访问
+	bind  局域网IP    只能局域网内IP的机器访问, 本地localhost都无法访问.
+	
+			#bind localhost
+还要记得把	protected-mode改成 no  !!!!
+
+mybatis的逆向工程时，数据库中的longtext和tinyint(0-255)要手动改成String和Integer，不然会不显示和变成Boolean
+
+(function(){})表示一个匿名函数。function(arg){...}定义了一个参数为arg的匿名函数，然后使用(function(arg){...})(param)来调用这个匿名函数。其中param是传入这个匿名函数的参数。
+需要注意与$(function(){})的区别：$(function(){}) 是 $(document).ready(function(){}) 的简写，用来在DOM加载完成之后执行一系列预先定义好的函数。
+	
+$(selector).get(url,data,success(response,status,xhr),dataType)
+等同于	$.ajax({
+		  url: url,
+		  data: data,
+		  success: success,
+		  dataType: dataType
+		});	
+
+script不能写成自闭的形式<script/>		
+	<!ELEMENT img EMPTY>
+	<!ATTLIST img   %attrs;
+	  src %URI; #REQUIRED
+	  alt %Text; #REQUIRED
+	  longdesc %URI; #IMPLIED
+	  height %Length; #IMPLIED
+	  width %Length; #IMPLIED
+	  usemap %URI; #IMPLIED
+	  ismap (ismap) #IMPLIED
+	  >
+	这是 img 标签的定义。 ELEMENT 关键字说明它是一个元素， EMPTY 关键字说明它的内容必须是空白。因此，我们可以使用自关闭形式：
+	<img src="image.png" alt="some image" />
+	留意 ATTLIST 里面声明了两个属性是 #REQUIRED 的，所以必须提供。
+
+	接下来我们再看看 script 标签的定义：
+	<!ELEMENT script (#PCDATA)>
+	<!ATTLIST script
+	  id ID #IMPLIED
+	  charset %Charset; #IMPLIED
+	  type %ContentType; #REQUIRED
+	  language CDATA #IMPLIED
+	  src %URI; #IMPLIED
+	  defer (defer) #IMPLIED
+	  xml:space (preserve) #FIXED 'preserve'
+	  >
+	可以看到 script 标签通过 (#PCDATA) 声明了它的内部允许包含 CDATA 数据，因此它不是一个带 EMPTY 关键字的标签，也就不可能使用自关闭的写法。	
+
+搜索框居中：通过col-md-offset-3前移	
+	<div class="input-group col-xs-6  col-md-offset-3">
+			<input type="text" class="form-control " placeholder="Search for...">
+		<span class="input-group-btn">
+			<button class="btn btn-default" type="button">Go!</button>
+		</span>	
+	</div>
+	
+mybatis中生成的表分包后，记得改spring-dao.xml中的mapper映射的配置	
+
+<c:forEach var="sk" items="${list}">记得list也要加el表达式！！！
+
+Cannot build Artifact 'XXX:war exploded' because it is included into a circular dependency
+rebuild project     build artifacts
+
+热部署:
+	第1种：修改服务器配置，使得IDEA窗口失去焦点时，更新类和资源
+		菜单Run -> EditConfiguration , 然后配置指定服务器下，右侧server标签下on frame deactivation = Update classes and resource。
+	第2种：使用springloaded jar包
+		a. 下载jar包，github：https://github.com/spring-projects/spring-loaded
+		b. 启动应用时添加VM启动参数：-javaagent:/home/lkqm/.m2/repository/org/springframework/springloaded/1.2.7.RELEASE/springloaded-1.2.7.RELEASE.jar -noverify
+	第3种：使用spring-boot-devtools提供的开发者工具
+		spring-boot项目中引入如下依赖
+		<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-devtools</artifactId>
+		 </dependency>
+	第4种：使用Jrebel插件实现热部署(该插件14天免费试用)
+		在线安装：菜单File -> Setting -> Plugin, 点击右侧底部 Browse repositories, 弹出框顶部输入:JReble for Intellij， 选中安装即可。
+	IDEA开启项目自动编译，进入设置，Build,Execut, Deployment -> Compiler 勾选中左侧的Build Project automatically
+	IDEA开启项目运行时自动make, ctrl + shift + a搜索命令：registry -> 勾选compiler.automake.allow.when.app.running
+
+搜索查询时：入参为：名称，其他条件（如是否可用），页号
+			返回值为：分页对象（结果集，分页（当前页，每页条数，总条数））
+
+pagination里面有个cpn静态方法，如果传入的数是小于等于0，就返回1		
+pagination的构造函数参数（pageNo,pageSize,totalCount），
+productQueryDto中的pageRow只有在查结果集的时候有用，是做出来方便计算，省的拿到sql中计算
+
+分页回显的时候：pagination中的方法pageView(url，params)传入跳转的地址和参数值
+	
+搜索用模糊查询 ：name like "%" #{name} "%"
+
+mybatis 的<when>中and写在前面
+
+mybatis如果是类的话就不用把这个类的名字写在#{}中了，直接写它的变量就行了
+
+COUNT(1)这两个中间不能有空格
+
+传到controller层的参数要记得回显
+
+<nav style="text-align: center">组件居中的方法
+
+1.如果只要提交在表单中信息，直接表单action地址，method就行，获取的值就是各个元素的name的值
+2.要提交表单外的东西，要写一个函数，拼接地址和参数
+		function submit_a(){
+			//获取用户输入的值
+			var username = document.getElementById("id_user").value;
+			var password = document.getElementById("id_pwd").value;
+			//拼接url
+			var url = "servlet/TestServlet?";
+			url += "username="+username+"&password="+password;
+			//重新定位url
+			window.location = url;//$.get(url);
+		}
+3.也可以直接在a href=""中加入地址和参数
+
+web.xml过滤器解决post乱码问题
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+js的常用简写：	
+	var car = new Object();
+	car.colour = 'red';
+	car.wheels = 4;
+	car.hubcaps = 'spinning';
+	car.age = 4;	
+	
+	var car = {
+    colour:'red',
+    wheels:4,
+    hubcaps:'spinning',
+    age:4
+	}
+	
+$("#aa").click(function() {})   而click传入一个参数表示执行click函数
+$("#aa").onclick=function(){}	
+	click方法 是jQuery实现的方法，为$("#aa")检索到的元素绑定click事件；
+	而onclick是js原生的click事件绑定，即使没有加载jQuery库也可以使用。
+	需要注意的是：
+	$('#aa')返回的是一个包含符合条件的dom的数组，click() 可以为数组中的多个元素（有些选择器可能会返回多个匹配结果）绑定click事件（即，隐式遍历）。
+	onclick只能给一个dom元素绑定click事件，所以$("#aa").onclick=function(){}这样的写法会报错，改成 $("#aa").get(0).onclick=function(){} 即表示从jQuery结果集中取出第一个元素为其绑定click事件
+	
+第一种：$("#click").click(function(){       
+　　　　　　alert("Hello World  click");  
+  　　});
+
+第二种：$('#clickon').on('click', function(){  
+ 　　　　alert("Hello World  on");  
+　　　　}); 
+
+第三种：$('#clickbind').bind("click", function(){  
+ 　　　　alert("Hello World  bind");  
+　　　　});	
+第四种：btn.onclick = function() { （这种多个会覆盖之前的）
+		alert(1);
+		} 
+
+想要传一些表单没有的信息，可以用type="hidden"增加表单内容
+<input type="hidden" id="hiddenid" value="${product.id}">
+<input type="hidden" id="hiddenPic" value="${product.imgUrl}"/>		
+		
+把想要传的值都放在表单里，不想显示的用hidden藏起来，设置多个button按钮，onclick设置函数，这样就可以实现一个表单向不同地址发送，而且不需要去其他地方取值。
+input内可以用onchange=一个函数，函数里面用ajaxSubmit
+ajaxSubmit，提交后页面不刷新，有返回值:		function pictureUpload() {
+												var params ={
+												   url : "/editGoods/uploadPic",
+												   dataType:"json",
+												   type : "post",
+												   success : function (data) {
+													   $("#hiddenpic").val(data.url);
+													   $("#pic").atrr("src",data.url);
+												   }
+												}
+												$("#javaForm").ajaxSubmit(params);
+											}
+
+普通submit，提交后就不管了，页面刷新：		function pictureUpload() {
+												$("#javaForm").attr("action","servlet/TestServlet");
+												$("#javaForm").attr("method","post");
+												$("#javaForm").submit();	
+											}
+		
+这里面详细列出了表单提交的方法：https://blog.csdn.net/qq_20128967/article/details/52847518?locationNum=8&fps=1
+	
+如果ajax返回了地址？
+如果普通submit没有返回地址？
+
+pringmvc图片上传
+用这个来实现图片上传： 	引入两个jar包	commons-fileupload-1.2.2.jar
+										commons-io-2.4.jar
+在springmvc.xml配置文件中配置插件	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+要设置最大上传大小，不然会出错			<property name="maxUploadSize">
+											<value>5242880</value>
+										</property>
+									</bean>
+					
+
+hadoop创建文件的时候出现权限拒绝，hadoop fs -chmod 777 /user/a的方法更改要添加文件的文件夹的权限
+
+看test的时候要注意有没有before和after
+
+用multipartfile上传图片的方法:	<form action="fileUpload" method="post" enctype="multipart/form-data">
+									选择文件:<input type="file" name="file">
+									<input type="submit" value="提交">
+								</form>
+form中记得加入一个属性enctype="multipart/form-data"	
+
+上传图片过程：点击file后，触发onchange()，把图片传输到文件服务器，返回地址，地址被重新写入<input><imag>里面，点提交后将地址存到数据库
+
+写jason可以用JSONObject来弄，在org.json包里		JSONObject jo = new JSONObject();
+												jo.put("url",url);
+												response.setContentType("application/json;charset=UTF-8");
+												response.getwriter().write(jo.toString());
+如果要放对象，那个对象应该重写toString()方法								
+								
+图片回显：	function pictureUpload() {
+				var params ={
+				   url : "/editGoods/uploadPic",
+				   dataType:"json",
+				   type : "post",
+				   success : function (data) {
+					   $("#hiddenpic").val(data.url);
+					   $("#pic").attr("src",data.url);
+				   }
+				}
+				$("#javaForm").ajaxSubmit(params);
+			}
+
+Controller方法的返回值可以有以下几种：
+1、返回ModelAndView
+返回ModelAndView时最常见的一种返回结果。需要在方法结束的时候定义一个ModelAndView对象，并对Model和View分别进行设置。
+2、返回String
+1）：字符串代表逻辑视图名
+真实的访问路径=“前缀”+逻辑视图名+“后缀”
+注意：如果返回的String代表逻辑视图名的话，那么Model的返回方式如下：
+public String testController(Model model){
+model.addAttribute(attrName,attrValue);//相当于ModelAndView的addObject方法
+return "逻辑视图名";
+   }
+2）：代表redirect重定向
+redirect的特点和servlet一样，使用redirect进行重定向那么地址栏中的URL会发生变化，同时不会携带上一次的request
+案例：
+public String testController(Model model){
+return "redirect:path";//path代表重定向的地址
+}
+3）：代表forward转发
+通过forward进行转发，地址栏中的URL不会发生改变，同时会将上一次的request携带到写一次请求中去
+案例：
+public String testController(Model model){
+return "forward:path";//path代表转发的地址
+}
+3、返回void
+返回这种结果的时候可以在Controller方法的形参中定义HTTPServletRequest和HTTPServletResponse对象进行请求的接收和响应
+1）使用request转发页面
+  request.getRequestDispatcher("转发路径").forward(request,response);
+2）使用response进行页面重定向
+  response.sendRedirect("重定向路径");
+3）也可以使用response指定响应结果
+  response.setCharacterEncoding("UTF-8");
+  response.setContentType("application/json;charset=utf-8");
+  response.getWriter.write("json串");
+  
+JSONObject jo = new JSONObject();  
+jo.put("url",url);
+response.setContentType("application/json;charset=UTF-8");
+response.getwriter().write(jo.toString);
+返回void和返回对象(加responseBody)是一样的  
+
+
+如果你想保留request范围内的数据,那么就需要用转发,如果你不想保留request范围内的数据和请求参数,那么可以重定向.
+转发是服务器内部跳转，数据不会丢失，浏览器只提交了一次请求
+重定向是客户端二次跳转，数据会丢失，浏览器提交了二次请求
+做增、删、改的时候最好用重定向，因为如果不用重定向，每次刷新页面就相当于再请求一次，就可能会做额外的操作，导致数据不对。
+
+弹框是否确定onclick="if(!confirm('您确定删除吗？')) {return false;}
+
+批量删除：一个表单里有多个一样的值，后台接收的是这个类型的数组
+parameterType如果是数组或者list等集合，只要写泛型就行
+
+mybatis逆向工程实现分页的插件：https://blog.csdn.net/weixin_35891116/article/details/53734795
+
+file属性加一个multiple="multiple"可以支持批量选文件
+同时contrller层得到数组，for循环遍历上传图片
+
+solr搭建的时候有显示需要solr.xml文件，如下配置
+	<solr>
+	<solrcloud>
+	<str name="host">${host:}</str>
+	<int name="hostPort">${jetty.port:8983}</int>
+	<str name="hostContext">${hostContext:solr}</str>
+	<int name="zkClientTimeout">${zkClientTimeout:15000}</int>
+	<bool name="genericCoreNodeNames">${genericCoreNodeNames:true}</bool>
+	</solrcloud>
+	<shardHandlerFactory name="shardHandlerFactory"
+	class="HttpShardHandlerFactory">
+	<int name="socketTimeout">${socketTimeout:0}</int>
+	<int name="connTimeout">${connTimeout:0}</int>
+	</shardHandlerFactory>
+	</solr>
+
+cp solr-4.10.3.war /usr/share/tomcat/webapps/solr.war 
+
+当我们不知道前端传来的图片的名字时，可以强转request为multipartRequest
+							MultipartRequest mr = (MultipartRequest)request;
+							Map<String,MultipartRequest> mrmap = mr.getFileMap();再遍历
+							
+传到数据库里的图片是<imag scr="...." /><imag scr="...." />				
+
+Available parameters are [0, 1, param1, param2]是因为mapper中的参数对不上
+
+获取cookie中id的方法
+	document.cookie="userId=828"; 
+	document.cookie="userName=hulk"; 
+	//获取cookie字符串 
+	var strCookie=document.cookie; 
+	//将多cookie切割为多个名/值对 
+	var arrCookie=strCookie.split("; "); 
+	var userId; 
+	//遍历cookie数组，处理每个cookie对 
+	for(var i=0;i<arrCookie.length;i++){ 
+	var arr=arrCookie[i].split("="); 
+	//找到名称为userId的cookie，并返回它的值 
+	if("userId"==arr[0]){ 
+	userId=arr[1]; 
+	break; 
+	} 
+	} 
+	alert(userId); 
+	
+有了request和response就可以让后台来自己取cookie	
+	设置cookie要记得设置它的路径
+	Cookie cookie = new Cookie("zjuUserName",userName);
+	cookie.setPath("/");
+	response.addCookie(cookie);
+	
+重定向不能携带中文，应该提前对它进行转义,encodeURIComponent() 函数可把字符串作为 URI 组件进行编码。
+encodeURIComponent(window.location.href)
+最后return "redirect:"+returnUrl;
+
+json改成jsonp就实现跨域，再多传一个String callback，再把callback送回去，
+			MappingJacksonValue  mjv = new MappingJacksonValue(result);
+			mjv.setJsonpFunction(callback);
+			
+this.form.submit()直接提交这个表单
+
+只显示一张图片，传过来的是数组，如果要显示多张就遍历一下
+<img width="50" height="50" src="${product.images[0]}"/></td>
+
+如果要显示多张图片，数据库里的imgUrl是以逗号隔开，就在bean里面多设一个String[] images的项
+productProduct.setImages(productProduct.getImgUrl().split(","));(注意排除为空的可能)
+jsp页面显示：	<c:forEach items="${pagination.list}" var="product">
+					<td align="center" class="">${product.id}</td>
+					<c:forEach items="${product.images}" var="image">
+						<img width="40" height="40" src="${image}"/>
+					</c:forEach>
+					<td align="center">${product.name}</td>
+				</c:forEach>
+
+//判断用户是否登陆 
+		$(function(){
+            $.ajax({
+                url : "/login/singleLogin",
+                type : "post",
+                dataType : "json",
+                success : function(data){
+                    if(data.result == 1){
+                        $("#login").hide();
+                        $("#regist").hide();
+                    }else{
+                        $("#logout").hide();
+                        $("#myOrder").hide();
+                    }
+                }
+            });
+        })				
+
+普通提交时：无非就是用表单和不用表单		
+选择地址的方式：href ,表单的action,document.getElementById('').action=
+传参的方式：表单,问号接在后面,ajax时多一项data:{"id":id}		
+
+ajax时：（后面三种貌似比较好）
+$.ajax(对象) 	$.get('url',{' ': , ' ' : },function(data){})	$.post('url',{' ': , ' ' : },function(data){})	 $("#tf").ajaxSubmit(对象);
+	$.ajax({  
+        type:'post',      
+        url:'Notice_noTipsNotice',  
+        data:'k1=v1&k2=v2...',    
+        dataType:'json',  
+        success:function(data){  
+        }  
+    });  
+	
+	
+<script>  
+	//设置cookie  
+	function setCookie(cname, cvalue, exdays) {  
+		var d = new Date();  
+		d.setTime(d.getTime() + (exdays*24*60*60*1000));  
+		var expires = "expires="+d.toUTCString();  
+		document.cookie = cname + "=" + cvalue + "; " + expires;  
+	}  
+	//获取cookie  
+	function getCookie(cname) {  
+		var name = cname + "=";  
+		var ca = document.cookie.split(';');  
+		for(var i=0; i<ca.length; i++) {  
+			var c = ca[i];  
+			while (c.charAt(0)==' ') c = c.substring(1);  
+			if (c.indexOf(name) != -1) return c.substring(name.length, c.length);  
+		}  
+		return "";  
+	}  
+	//清除cookie    
+	function clearCookie(name) {    
+		setCookie(name, "", -1);    
+	}    
+	function checkCookie() {  
+		var user = getCookie("username");  
+		if (user != "") {  
+			alert("Welcome again " + user);  
+		} else {  
+			user = prompt("Please enter your name:", "");  
+			if (user != "" && user != null) {  
+				setCookie("username", user, 365);  
+			}  
+		}  
+	}  
+	checkCookie();   
+</script>  
+	
+window.prompt参数,有两个, 
+第一个参数,显示提示输入框的信息. 
+第二个参数,用于显示输入框的默认值. 
+返回,用户输入的值.
+
+mybatis里要写INTEGER不能写INT
+
+上传多张图片加一个multiple="multiple"就可以了
+
+img中的标签src的地址是以webapp为根目录开始的
+
+<dependency>
+	<groupId>net.sf.json-lib</groupId>
+	<artifactId>json-lib</artifactId>
+	<version>2.4</version>
+	<classifier>jdk15</classifier>
+</dependency>
+
+对象转成json
+	public static void convertObject() {
+	Student stu=new Student();
+	stu.setName("JSON");
+	stu.setAge("23");
+	stu.setAddress("北京市西城区");
+	//1、使用JSONObject
+	JSONObject json = JSONObject.fromObject(stu);
+	//2、使用JSONArray
+	JSONArray array=JSONArray.fromObject(stu);
+	String strJson=json.toString();
+	String strArray=array.toString();
+	System.out.println("strJson:"+strJson);
+	System.out.println("strArray:"+strArray);
+	}
+
+json转成对象	
+	public static void jsonStrToJava(){
+	//定义两种不同格式的字符串
+	String objectStr="{\"name\":\"JSON\",\"age\":\"24\",\"address\":\"北京市西城区\"}";
+	String arrayStr="[{\"name\":\"JSON\",\"age\":\"24\",\"address\":\"北京市西城区\"}]";
+	//1、使用JSONObject
+	JSONObject jsonObject=JSONObject.fromObject(objectStr);
+	Student stu=(Student)JSONObject.toBean(jsonObject, Student.class);
+	//2、使用JSONArray
+	JSONArray jsonArray=JSONArray.fromObject(arrayStr);
+	//获得jsonArray的第一个元素
+	Object o=jsonArray.get(0);
+	JSONObject jsonObject2=JSONObject.fromObject(o);
+	Student stu2=(Student)JSONObject.toBean(jsonObject2, Student.class);
+	System.out.println("stu:"+stu);
+	System.out.println("stu2:"+stu2);
+	}	
+	
+style="display: none"可以隐藏标签
+
+先写一个span，后面再来输入内容
+<span id="killPhoneMessage" class="glyphicon"> </span>
+$('#killPhoneMessage').hide().html('<label class="label label-danger">手机号错误!</label>').show(300);
+html()会将内容改为样式后输出
+$("p").text("Hello <b>world!</b>");会将内容直接输出，Hello <b>world!</b>，没用
+
+innerHtml 打印标签之间的内容，包括标签和文本信息
+innerText 打印标签之间的纯文本信息，会将标签过滤掉
+
+解决高qps的方法：静态资源用cdn保存，非静态不常变的用redis存（如开始时间，结束时间），常变化的用mysql（如库存）
+事务可以用mysql存储过程
+
+redis分布式锁：https://www.cnblogs.com/linjiqin/p/8003838.html
+加锁：
+	public class RedisTool {
+		private static final String LOCK_SUCCESS = "OK";
+		private static final String SET_IF_NOT_EXIST = "NX";
+		private static final String SET_WITH_EXPIRE_TIME = "PX";
+		/**
+		 * 尝试获取分布式锁
+		 * @param jedis Redis客户端
+		 * @param lockKey 锁
+		 * @param requestId 请求标识
+		 * @param expireTime 超期时间
+		 * @return 是否获取成功
+		 */
+		public static boolean tryGetDistributedLock(Jedis jedis, String lockKey, String requestId, int expireTime) {
+			String result = jedis.set(lockKey, requestId, SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME, expireTime);//必须一句话搞定，保证原子性
+			if (LOCK_SUCCESS.equals(result)) {
+				return true;
+			}
+			return false;
+		}
+	}
+解锁：
+	public class RedisTool {
+		private static final Long RELEASE_SUCCESS = 1L;
+		/**
+		 * 释放分布式锁
+		 * @param jedis Redis客户端
+		 * @param lockKey 锁
+		 * @param requestId 请求标识
+		 * @return 是否释放成功
+		 */
+		public static boolean releaseDistributedLock(Jedis jedis, String lockKey, String requestId) {
+			String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+			Object result = jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList(requestId));//eval方法把语句传给redis服务器执行，并使参数KEYS[1]赋值为lockKey，ARGV[1]赋值为requestId
+			if (RELEASE_SUCCESS.equals(result)) {
+				return true;
+			}
+			return false;
+		}
+	}
+	
+错误示例2：
+public static void wrongReleaseLock2(Jedis jedis, String lockKey, String requestId) {
+    // 判断加锁与解锁是不是同一个客户端
+    if (requestId.equals(jedis.get(lockKey))) {
+        // 若在此时，这把锁突然不是这个客户端的，则会误解锁
+        jedis.del(lockKey);
+    }
+}
+如代码注释，问题在于如果调用jedis.del()方法的时候，这把锁已经不属于当前客户端的时候会解除他人加的锁。那么是否真的有这种场景？答案是肯定的，比如客户端A加锁，一段时间之后客户端A解锁，在执行jedis.del()之前，锁突然过期了，此时客户端B尝试加锁成功，然后客户端A再执行del()方法，则将客户端B的锁给解除了。
+	
+Spring缓存注解@Cacheable(第一次执行，后面就往缓存里取)、@CacheEvict(执行完就把它删了)、@CachePut(每次都往里存)	
+
+当你的redis数据库里面本来存的是字符串数据或者你要存取的数据就是字符串类型数据的时候，那么你就使用StringRedisTemplate即可，
+但是如果你的数据是复杂的对象类型，而取出的时候又不想做任何的数据转换，直接从Redis里面取出一个对象，那么使用RedisTemplate是
+更好的选择。
+
+hutool
+
+IOUtils.write(data, response.getOutputStream());下载：写到输出流
+
+layer.use('upload',function(){...})layer.ui上传
+
+
+
+信息安全工程师（Web渗透方向）岗位题目¶
+
+Redis未授权访问漏洞如何入侵利用？5
+
+匿名连接访问，获取敏感数据。 通过set db写入crontab或写入ssh private key提权拿到服务器权限。
+
+**SSRF漏洞原理、利用方式及修复方案？Java和PHP的SSRF区别？7 **
+
+request服务对入参未做限制，导致可以构造非HTTP[S]协议，比如dict造成任意文件读取、gopher探测扫描内网服务等。 协议支持程度不一样。
+
+**宽字节注入漏洞原理、利用方式及修复方案？5 **
+
+编码转换 使用过滤函数mysql_real_escape_string
+
+简述JSONP劫持利用方式及修复方案？5
+
+在恶意网站引入JSONP接口，并骗取用户访问恶意网站即可拿到该用户的官方网站数据。 通过限制Referer缓解，通过对每个JSONP接口增加Token来彻底防止。
+
+CRLF注入原理？3
+
+通过插入CRLF字符可以控制响应头
+
+越权问题如何检测？3
+
+通过递增操作的编号或数据，根据返回结果判断是否能操作，从而达到越权。
+
+黑盒如何检测XSS漏洞？7
+
+通过在payload中引入探测js或图片，并像可能存在的地方发起payload探测。
+
+一句话木马密码是一个不可见的字符，ascii码为9，此时应该如何使用caidao进行连接？5 Chr(35)&chr(37)&chr(09) %23%25%09
+
+有哪几种后门实现方式？10
+
+一句话、大马、Rootkit、Crontab、rc.d、bashrc
+
+webshell检测有什么方法思路？10
+
+代码特征、行为特征、文件特征等
+
+Linux服务器中了木马后，请简述应急思路？10
+
+这个题比较灵活，主要看看能否考虑全面，比如网络隔离、样本留存分析、时候回溯、全面排查等等
+
+遇到新0day(比如Struts2)后，应该如何进行应急响应？10
+
+打补丁、升级，其他参考上一题
+
+简述Python装饰器、迭代器、生成器原理及应用场景？10
+
+通用题
+
+简述Python进程、线程和协程的区别及应用场景？10
+
+通用题
+
+安全开发工程师（Java方向）岗位题目¶
+Java虚拟机区域如何划分？6
+HashMap和Hashtable区别？8
+进程间通信有哪几种方式？6
+快速排序的过程和复杂度？6
+Java BIO/NIO/AIO是什么？适用哪些场景？8
+调试工具及异常排查流程？5
+数据库索引结构，什么情况下应该建唯一索引？6
+数据库分页语句如何写？6
+获取一个入参url，请求url地址的内容时应注意什么？10
+参数入库前应该如何过滤？12
+过滤器和拦截器原理和应用场景？8
+SESSION ID如何不被Javascript读取？4
+CSRF的Token如何设计？10
+如何实现跨域请求？5
+
+@Configuration
+public class ESConfig {
+
+    @Bean
+    public TransportClient transportClient() throws UnknownHostException {
+ 
+        InetSocketTransportAddress node = new InetSocketTransportAddress(
+                InetAddress.getByName("192.168.171.129"),
+                9300
+        );
+ 
+        Settings settings = Settings.builder()
+                .put("cluster.name", "elasticsearch")
+                .build();
+ 
+        TransportClient client = new PreBuiltTransportClient(settings);
+        client.addTransportAddress(node);
+        return client;
+    }
+
+    /**
+     * 防止netty的bug
+     * java.lang.IllegalStateException: availableProcessors is already set to [4], rejecting [4]
+     */
+    @PostConstruct
+    void init() {
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
+    }
+}
+
+
+由于每次都是在方法内部创建的连接，那么线程之间自然不存在线程安全问题。但是这样会有一个致命的影响：导致服务器压力非常大，并且严重影响程序执行性能。由于在方法中需要频繁地开启和关闭数据库连接，这样不尽严重影响程序执行效率，还可能导致服务器压力巨大。
+　　那么这种情况下使用ThreadLocal是再适合不过的了，因为ThreadLocal在每个线程中对该变量会创建一个副本，即每个线程内部都会有一个该变量，且在线程内部任何地方都可以使用，线程之间互不影响，这样一来就不存在线程安全问题，也不会严重影响程序执行性能。
+
+工厂模式（想要什么返回什么），单例模式，原型模式（深浅clone），建造者模式（），装饰模式（把这个对象作为全局变量，增加方法，把自己本身也实现接口），策略模式（选择执行哪个策略），观察者模式，享元模式（pool），代理模式（可以决定代理的方法执行还是不执行），外观模式（就是把别的很多功能封装在一起执行），组合模式（树状结构），桥接模式（构造的时候传进来是哪个的发动机就用这个来执行），适配器模式（相当于中间件），中介者模式（通过中介来实现两者的通信）
+
+InputStream  ByteArrayInputStream    FileInputStream   InputStreamReader	     FilterInputStream    BufferedInputStream    BufferedWriter   DataInputStream   ObjectInputStream    
+
+被两个类加载器加载的同一个类， JVM不认为是相同的类
+
+手写web服务器工作流程：jvm加载时先加载web.xml，经过解析后，WebApp把每个url对应的servlet的名称存成静态map。
+server启动后开启serverSocket，while(true)循环accept，每收到一个请求，就新建一个dispatch线程去处理得到的socket，继续accept。
+dispatch传入得到的socket，在构造函数里先new request，new response，request，response 的构造函数里获得socket的InputStream和OutputStream，用来获取传过来的数据和传回去的数据。
+request的构造函数里面解析request后得到url，然后从WebApp中之前从web.xml中解析得到的url找到对应的servlet，new出来来处理这个请求，然后通过response把响应回传，终止socket，完成请求响应过程。
+
+Content-length: 是只包括内容的，不包括头信息
+
+getMethods(),该方法是获取本类以及父类或者父接口中所有的公共方法(public修饰符修饰的)
+getDeclaredMethods(),该方法是获取本类中的所有方法，包括私有的(private、protected、默认以及public)的方法。
+
+ try {
+	 URL[] urls = new URL[] {new URL("file:/"+"C:/myjava/")};
+	 URLClassLoader loader = new URLClassLoader(urls);
+	 Class c = loader.loadClass("HelloWorld");
+	 //调用加载类的main方法
+	 Method m = c.getMethod("main",String[].class);
+	 m.invoke(null, (Object)new String[]{});
+	 //由于可变参数是JDK5.0之后才有。
+	 //m.invoke(null, (Object)new String[]{});会编译成:m.invoke(null,"aa","bb"),就发生了参数个数不匹配的问题。
+	 //因此，必须要加上(Object)转型，避免这个问题。
+	 //public static void main(String[] args)
+	 
+ } catch (Exception e) {
+	 e.printStackTrace();
+ }
+
+双亲委托机制的好处：防止和rt.jar中的类冲突，比如自己写了一个java.lang.String类，为了安全就永远不会被加载
+
+timeStamp包括日期和时间
+time只有时间
+date只有日期
+
+connection statement resultset都要合理关掉
+
+classpath就是编译后的classes目录    resources目录下的问下都会被拷贝过去     src下的文件会被编译后拷过去
+
+CopyOnWriteArrayList在遍历集合的时候如果对集合进行修改，会复制一份出来修改，不会直接修改在原来的那份上，这样就不会抛出异常了
+
+可重入锁：看看锁是不是被当前线程持有，并且解锁的次数是不是和加锁的次数相同才确定能不能解锁
+用synchronized代码块的时候相当于每个对象都可以当做一把锁
+无非在于锁是谁  线程是哪个
+
+乐观锁就是每个线程都尝试去操作，如果版本和修改前的版本一致就成功，如果不一致就继续修改(cas)change and swap
+悲观锁就是只有一个线程能进去操作
+
+
+
+hbase读写流程
+
+Zookeeper 
+保证任何时候，集群中只有一个HMaster； 
+实时监控HRegion Server的上线和下线信息，并实时通知给HMaster； 
+存储HBase的schema和table元数据； 
+HMaster需要知道哪些HRegionServer是活的,可用的。及HRegionServer的位置信息，以便管理HRegionServer。这些信息都有Zookeeper提供！
+
+HMaster 
+理论上HMaster可以启动多个，但是Zookeeper有Master Election机制保证且允许总有且只有一个Master在运行，来负责Table和Region的管理工作。 
+管理HRegionServer的负载均衡，调整Region分布； 
+Region Split后，负责新Region的分布； 
+在HRegionServer停机后，负责失效HRegionServer上Region迁移工作。
+
+Region Server 
+监控维护Region，处理对这些Region的响应，请求； 
+负责切分在运行过程中变得过大的Region。
+
+注意：
+  1,Client访问hbase上数据时并不需要Hmaster参与，数据的读写也只是访问RegioneServer，
+    HMaster仅仅维护这table和Region的元数据信息，负载很低。
+  2,HBase是通过DFS client把数据写到HDFS上的
+  3,每一个HRegionServer有多个HRegion，每一个HRegion有多个Store，每一个Store对应一个列簇。
+  4,HFile是HBase中真正实际数据的存储格式，HFile是二进制格式文件，StoreFile就是对HFile进行了封装（其实就是一个东西），
+    然后进行数据的存储。
+  5,HStore由MemStore（只有一个）和StoreFile（多个）组成。
+  6,HLog记录数据的变更信息，用来做数据恢复。
+--------------------- 
+写数据流程
+1,Client先访问zookeeper，从meta表获取相应region信息，然后找到meta表的数据
+2,根据namespace、表名和rowkey根据meta表的数据找到写入数据对应的region信息
+3,找到对应的regionserver
+4,把数据分别写到HLog和MemStore上一份
+4,MemStore达到一个阈值后则把数据刷成一个StoreFile文件。（若MemStore中的数据有丢失，则可以总HLog上恢复）
+5,当多个StoreFile文件达到一定的大小后，会触发Compact合并操作，合并为一个StoreFile，（这里同时进行版本的合并和数据删除。）
+6,当Storefile大小超过一定阈值后，会把当前的Region分割为两个（Split），并由Hmaster分配到相应的HRegionServer
+--------------------- 
+读数据流程
+1,Client先访问zookeeper，从meta表读取region的位置，然后读取meta表中的数据。meta中又存储了用户表的region信息。
+2,根据namespace、表名和rowkey在meta表中找到对应的region信息
+3,找到这个region对应的regionserver
+4,查找对应的region
+5,先从MemStore找数据，如果没有，再到StoreFile上读(为了读取的效率)。
+--------------------- 
+
+hbase速度快的原因：1、到内存就返回了，无需磁盘   2、缓存     3、列式
+
+
+
+正确：select tid from student where tname like '%' #{name} '%' and tage =#{ageCon}
+错误：select tid from student where tname like '%'#{name}'%' and tage =#{ageCon}
+中间的引号是干嘛的？
+
+set   list   map     array 的区别
+
+引号、括号要不要写要注意
+
+
+
+提示不出来 ：少引包
+
+
+xml约束???
+
+整合思路
+
+1、Dao层：
+mybatis整合spring，通过spring管理SqlSessionFactory、mapper代理对象。需要mybatis和spring的整合包。
+整合内容
+对应工程:
+Pojo                                      Taotao-mangaer-pojo
+Mapper接口                                Taotao-mangaer-mapper
+Mapper映射文件                            Taotao-mangaer-mapper
+sqlmapConfig.xml                          Taotao-manager-web
+applicationContext-dao.xml                Taotao-manager-web
+ 
+2、Service层：
+所有的实现类都放到spring容器中管理。由spring创建数据库连接池，并有spring管理实务。
+整合内容
+对应工程:
+Service接口                                Taotao-mangaer-service
+Service实现类                              Taotao-mangaer-service
+//applicationContext-service.xml             Taotao-manager-web
+//applicationContext-trans.xml               Taotao-manager-web
+ 
+3、表现层：
+Springmvc整合spring框架，由springmvc管理controller。
+整合内容
+对应工程:
+springmvc.xml                              Taotao-manager-web
+Controller                                 Taotao-manager-web
+
+
+???web.xml???
+
+redis 储存方式： 1.set('key','TK');          key  value        //String 类型
+                 2.lPush('list-key', 'A');   list              //插入链表头部/左侧，返回链表长度
+                 3.sAdd('key' , 'TK');       set 不能重复      //  (从左侧插入,最后插入的元素在0位置),集合中已经存在TK 则返回false 
+                                                                   不存在添加成功 返回true
+                 4.zAdd('tkey', 1, 'A');    zset  带一个score  //  插入集合tkey中，A元素关联一个分数1，插入成功返回1
+                                                                   同时集合元素不可以重复, 如果元素已经存在返回 0
+                 5.hSet('h', 'name', 'TK');   hash             // 在h表中 添加name字段 value为TK
+
+
+
+
+cd /root/hadoop/hadoop-2.8.2/etc/hadoop
+
+1.hadoop-env.sh
+中配置$JAVA_HOME目录
+
+
+2.core-site.xml中配置
+
+<configuration>
+
+<property>
+<name>fs.defaultFS</name>
+<value>hdfs://192.168.80.129:9000</value>
+</property>
+
+<property>
+<name>hadoop.tem.dir</name>
+<value>/home/hadoop/hdpdata</value>
+</property>
+
+</configuration>
+
+3.hdfs-site.xml配块的大小
+可以不配，都有默认值
+
+4.mapred-site.xml.template 
+把MapReduce交给yarn管理，默认local
+
+<property>
+<name>mapreduce.framework.name</name>
+<value>yarn</value>
+</property>
+
+再把名字的template去掉
+mv mapred-site.xml.template mapred-site.xml
+
+5.yarn-site.xml 
+
+<property>
+<name>yarn.resourcemanager.hostname</name>
+<value>192.168.80.129</value>
+</property>
+
+<property>
+<name>yarn.nodemanager.aux-services</name>
+<value>mapreduce_shuffle</value>
+</property> 
+
+
+
+
+
+
+
+*****************************/etc/profile******************************************
+
+/etc/profile中加上HADOOP_HOME和path路径
+# /etc/profile
+
+# System wide environment and startup programs, for login setup
+# Functions and aliases go in /etc/bashrc
+
+# It's NOT a good idea to change this file unless you know what you
+# are doing. It's much better to create a custom.sh shell script in
+# /etc/profile.d/ to make custom changes to your environment, as this
+# will prevent the need for merging in future updates.
+
+pathmunge () {
+    case ":${PATH}:" in
+        *:"$1":*)
+            ;;
+        *)
+            if [ "$2" = "after" ] ; then
+                PATH=$PATH:$1
+            else
+                PATH=$1:$PATH
+            fi
+    esac
+}
+
+
+if [ -x /usr/bin/id ]; then
+    if [ -z "$EUID" ]; then
+        # ksh workaround
+        EUID=`/usr/bin/id -u`
+        UID=`/usr/bin/id -ru`
+    fi
+    USER="`/usr/bin/id -un`"
+    LOGNAME=$USER
+    MAIL="/var/spool/mail/$USER"
+fi
+
+# Path manipulation
+if [ "$EUID" = "0" ]; then
+    pathmunge /usr/sbin
+    pathmunge /usr/local/sbin
+else
+    pathmunge /usr/local/sbin after
+    pathmunge /usr/sbin after
+fi
+
+HOSTNAME=`/usr/bin/hostname 2>/dev/null`
+HISTSIZE=1000
+if [ "$HISTCONTROL" = "ignorespace" ] ; then
+    export HISTCONTROL=ignoreboth
+else
+    export HISTCONTROL=ignoredups
+fi
+
+export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE HISTCONTROL
+
+# By default, we want umask to get set. This sets it for login shell
+# Current threshold for system reserved uid/gids is 200
+# You could check uidgid reservation validity in
+# /usr/share/doc/setup-*/uidgid file
+if [ $UID -gt 199 ] && [ "`/usr/bin/id -gn`" = "`/usr/bin/id -un`" ]; then
+    umask 002
+else
+    umask 022
+fi
+
+for i in /etc/profile.d/*.sh ; do
+    if [ -r "$i" ]; then
+        if [ "${-#*i}" != "$-" ]; then
+            . "$i"
+        else
+            . "$i" >/dev/null
+        fi
+    fi
+done
+
+unset i
+unset -f pathmunge
+export PATH=$PATH:/usr/local/nginx/sbin:$HADOOP_HOME/bin:$PATH
+export HADOOP_HOME=/root/hadoop/hadoop-2.8.2;
+export JAVA_HOME=/usr/local/jdk1.8.0_111;
+export PATH=$PATH:$JAVA_HOME/bin
+export PATH=$PATH:/usr/local/node/bin
+
+*****************************分割线******************************************
+
+
+
+
+再source /etc/profile
+
+格式化HDFS（hadoop namenode -format）
+
+/etc/hosts 中写哪些成员
+
+etc/hadoop/slaves中写小弟在哪
+
+sbin/hadoop-daemon.sh start datanode/namenode
+./start-all.sh启动
+http://192.168.80.130:50070这个网站中查看
+
+source /etc/profile
+
+//各台机器不能联系，不知道为什么
+
+
+
+配置HADOOP_HOME环境变量  path
+把windows的jar和lib拷到linux上
+
+
+
+
+1201	gopal
+1202	manissss
+1203	fasdfsdg
+
+
+
+var xx = test.combineByKey((lambda x : (x,1)),(lambda x,y: (x[0] + y, x[1]+ 1)),(lambda x,y : (x[0] + y[0], x[1] + y[1])) )
+
+
+
+
+storm jar storm111.jar com.itcast.ExclamationTopology
+
+spark-submit --class com.spark.app.WordCount  --master spark://mini1:7077  /root/spark111.jar 
+
+
+
+
+
+kafka/config/server.properties
+############################# Server Basics #############################
+
+# The id of the broker. This must be set to a unique integer for each broker.
+broker.id=0
+
+# Switch to enable topic deletion or not, default value is false
+#delete.topic.enable=true
+
+############################# Socket Server Settings #############################
+
+# The address the socket server listens on. It will get the value returned from 
+# java.net.InetAddress.getCanonicalHostName() if not configured.
+#   FORMAT:
+#     listeners = listener_name://host_name:port
+#   EXAMPLE:
+#     listeners = PLAINTEXT://your.host.name:9092
+listeners=PLAINTEXT://:9092
+port=9092
+host.name=mini1
+advertised.host.name=mini1
+advertised.port=9092
+
+# Hostname and port the broker will advertise to producers and consumers. If not set, 
+# it uses the value for "listeners" if configured.  Otherwise, it will use the value
+# returned from java.net.InetAddress.getCanonicalHostName().
+#advertised.listeners=PLAINTEXT://your.host.name:9092
+
+# Maps listener names to security protocols, the default is for them to be the same. See the config docume
+ntation for more details
+#listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SS
+L
+
+# The number of threads handling network requests
+num.network.threads=3
+
+# The number of threads doing disk I/O
+num.io.threads=8
+
+# The send buffer (SO_SNDBUF) used by the socket server
+socket.send.buffer.bytes=102400
+
+# The receive buffer (SO_RCVBUF) used by the socket server
+socket.receive.buffer.bytes=102400
+
+# The maximum size of a request that the socket server will accept (protection against OOM)
+socket.request.max.bytes=104857600
+
+
+############################# Log Basics #############################
+
+# A comma seperated list of directories under which to store log files
+log.dirs=/root/kafka/logs
+
+# The default number of log partitions per topic. More partitions allow greater
+# parallelism for consumption, but this will also result in more files across
+# the brokers.
+num.partitions=1
+
+# The number of threads per data directory to be used for log recovery at startup and flushing at shutdown
+.
+# This value is recommended to be increased for installations with data dirs located in RAID array.
+num.recovery.threads.per.data.dir=1
+
+############################# Log Flush Policy #############################
+
+# Messages are immediately written to the filesystem but by default we only fsync() to sync
+# the OS cache lazily. The following configurations control the flush of data to disk.
+# There are a few important trade-offs here:
+#    1. Durability: Unflushed data may be lost if you are not using replication.
+#    2. Latency: Very large flush intervals may lead to latency spikes when the flush does occur as there 
+will be a lot of data to flush.
+#    3. Throughput: The flush is generally the most expensive operation, and a small flush interval may le
+ad to exceessive seeks.
+# The settings below allow one to configure the flush policy to flush data after a period of time or
+# every N messages (or both). This can be done globally and overridden on a per-topic basis.
+
+# The number of messages to accept before forcing a flush of data to disk
+#log.flush.interval.messages=10000
+
+# The maximum amount of time a message can sit in a log before we force a flush
+#log.flush.interval.ms=1000
+
+############################# Log Retention Policy #############################
+
+# The following configurations control the disposal of log segments. The policy can
+# be set to delete segments after a period of time, or after a given size has accumulated.
+# A segment will be deleted whenever *either* of these criteria are met. Deletion always happens
+# from the end of the log.
+
+# The minimum age of a log file to be eligible for deletion due to age
+log.retention.hours=168
+
+# A size-based retention policy for logs. Segments are pruned from the log as long as the remaining
+# segments don't drop below log.retention.bytes. Functions independently of log.retention.hours.
+#log.retention.bytes=1073741824
+
+# The maximum size of a log segment file. When this size is reached a new log segment will be created.
+log.segment.bytes=1073741824
+
+# The interval at which log segments are checked to see if they can be deleted according
+# to the retention policies
+log.retention.check.interval.ms=300000
+
+############################# Zookeeper #############################
+
+# Zookeeper connection string (see zookeeper docs for details).
+# This is a comma separated host:port pairs, each corresponding to a zk
+# server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002".
+# You can also append an optional chroot string to the urls to specify the
+# root directory for all kafka znodes.
+zookeeper.connect=mini1:2181,mini2:2181
+
+# Timeout in ms for connecting to zookeeper
+zookeeper.connection.timeout.ms=6000
+
+
+
+
+export SPARK_HOME=/root/spark;
+export SCALA_HOME=/root/scala;
+export STORM_HOME=/root/storm;
+export SQOOP_HOME=/root/sqoop;
+export FLUME_HOME=/root/flume;
+export KAFKA_HOME=/root/kafka;
+export HBASE_HOME=/root/hbase;
+export ZOOKEEPER_HOME=/root/zookeeper;
+export HADOOP_HOME=/root/hadoop1;
+export HIVE_HOME=/root/hive;
+export JAVA_HOME=/usr/local/jdk1.8.0_111;
+export PATH=$PATH:$JAVA_HOME/bin
+export TOMCAT_HOME=/usr/local/tomcat
+export PATH=$PATH:/usr/local/node/bin
+PATH=$PATH:/usr/local/tomcat/bin:/usr/libexec/docker:$SCALA_HOME/sbin:$SPARK_HOME/bin:$SCALA_HOME/bin:/usr/local/nginx/sbin:$ZOOKEEPER_HOME/bin:$STORM_HOME/bin:$SQOOP_HOME/bin:$HBASE_HOME/bin:$KAFKA_HOME/bin:$FLUME_HOME/bin:$HBASE_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$HIVE_HOME/bin:$PATH
+
+nginx操作：
+nginx.conf****************
+
+
+
+
+zookeeper操作：
+
+ zoo.cfg **********************
+server.1=mini1:2888:3888
+
+zkServer.sh start
+
+kafka操作：
+
+server.properties **********************
+listeners=PLAINTEXT://:9092
+port=9092
+host.name=mini1
+advertised.host.name=mini1
+advertised.port=9092
+
+kafka-server-start.sh server.properties &
+kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
+kafka-console-producer.sh --broker-list mini1:9092 --topic test
+kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+
+flume操作：
+
+ flume-conf.properties **************************
+a1.sources = r1
+a1.sinks = k1
+a1.channels = c1
+
+# Describe/configure the source
+a1.sources.r1.type = exec
+a1.sources.r1.command = tail -F /root/logs/log
+#a1.sources.r1.type =spooldir
+#a1.sources.r1.spoolDir =/root/flume/a
+#a1.sources.r1.type = netcat
+#a1.sources.r1.bind = mini1
+#a1.sources.r1.port = 8888
+
+# Describe the sink
+a1.sinks.k1.type = org.apache.flume.sink.kafka.KafkaSink
+a1.sinks.k1.topic = test
+a1.sinks.k1.brokerList = mini1:9092
+a1.sinks.k1.batchSize = 20
+a1.sinks.k1.requiredAcks = 1
+#a1.sinks.k1.type = hdfs
+#a1.sinks.k1.hdfs.path = /root/a
+#a1.sinks.k1.hdfs.filePrefix = event-
+
+# Use a channel which buffers events in memory
+a1.channels.c1.type = memory
+a1.channels.c1.capacity = 1000
+a1.channels.c1.transactionCapacity = 100
+
+# Bind the source and sink to the channel
+a1.sources.r1.channels = c1
+a1.sinks.k1.channel = c1
+
+
+flume-ng agent --conf conf --conf-file conf/flume-conf.properties --name a1 -Dflume.root.logger=INFO,console
+
+************************************
+
+【$(this)与this的区别】
+相信很多刚接触JQuery的人，很多都会对$(this)和this的区别模糊不清，那么这两者有什么区别呢？
+首先来看看JQuery中的  $()  这个符号，实际上这个符号在JQuery中相当于JQuery（）,即$(this)=jquery();也就是说，这样可以返回一个jquery对象。那么，当你在网页中alert($('#id'));时，会弹出一个[object Object ]，这个object对象，也就是jquery对象了。
+那么，我们再回过头来说$(this)，这个this是什么呢？假设我们有如下的代码：
+$("#desktop a img").each(function(index){
+          alert($(this));
+          alert(this);
+}
+那么，这时候可以看出来：
+alert($(this));  弹出的结果是[object Object ]
+alert(this);        弹出来的是[object HTMLImageElement]
+也就是说，后者返回的是一个html对象(本例中是遍历HTML的img对象，所以为 HTMLImageElement)。很多人在使用jquery的时候，经常this.attr('src');   这时会报错“对象不支持此属性或方法”，这又是为什么呢？其实看明白上面的例子，就知道错在哪里了：
+很简单，this操作的是HTML对象，那么，HTML对象中怎么会有val()方法了，所以，在使用中，我们不能直接用this来直接调用jquery的方法或者属性。
+
+【prop与attr的区别】
+今天在用JQuery的时候发现一个问题用.attr("checked")获取checkbox的checked属性时选中的时候可以取到值,值为"checked"但没选中获取值就是undefined.
+为什么jquery 1.6+增加了.prop()方法，因为在有些浏览器中比如说只要写disabled，checked就可以了，而有的要写成disabled ="disabled"，checked="checked"。所以，从1.6开始，jq提供新的方法“prop”来获取这些属性。
+ 以前我们使用attr获取checked属性时返回"checked"和"",现在使用prop方法获取属性则统一返回true和false。
+看些例子
+<input type="checkbox"id="test" abc="111" />
+$(function(){ 
+el = $("#test"); 
+console.log(el.attr("style")); //undefined 
+console.log(el.prop("style")); //CSSStyleDeclaration对象 
+console.log(document.getElementById("test").style);//CSSStyleDeclaration对象 
+});
+el.attr(“style”)输出undefined，因为attr是获取的这个对象属性节点的值，很显然此时没有这个属性节点，自然输出undefinedel.prop(“style”)输出CSSStyleDeclaration对象，对于一个DOM对象，是具有原生的style对象属性的，所以输出了style对象至于document.getElementById(“test”).style和上面那条一样
+接着看：
+el.attr("abc","111") 
+console.log(el.attr("abc")); //111 
+console.log(el.prop("abc")); //undefined
+首先用attr方法给这个对象添加abc节点属性，值为111，可以看到html的结构也变了
+el.attr(“abc”)输出结果为111，再正常不过了el.prop(“abc”)输出undefined，因为abc是在这个的属性节点中，所以通过prop是取不到的
+el.prop("abc", "222"); 
+console.log(el.attr("abc")); //111 
+console.log(el.prop("abc")); //222
+我们再用prop方法给这个对象设置了abc属性，值为222，可以看到html的结构是没有变化的。输出的结果就不解释了。
+上面已经把原理讲清楚了，什么时候用什么就可以自己把握了。
+提一下，在遇到要获取或设置checked,selected,readonly和disabled等属性时，用prop方法显然更好，比如像下面这样：
+<input type="checkbox"id="test" checked="checked"/>console.log(el.attr("checked")); //checked 
+console.log(el.prop("checked")); //true 
+console.log(el.attr("disabled")); //undefined 
+console.log(el.prop("disabled")); //false
+显然，布尔值比字符串值让接下来的处理更合理。
+PS一下，如果你有JS性能洁癖的话，显然prop的性能更高，因为attr需要访问DOM属性节点，访问DOM是最耗时的。这种情况适用于多选项全选和反选的情况。
+大家都知道有的浏览器只要写disabled，checked就可以了，而有的要写成disabled ="disabled"，checked="checked"，比如用attr("checked")获取checkbox的checked属性时选中的时候可以取到值,值为"checked"但没选中获取值就是undefined
+jq提供新的方法“prop”来获取这些属性，就是来解决这个问题的，以前我们使用attr获取checked属性时返回"checked"和"",现在使用prop方法获取属性则统一返回true和false。
+那么，什么时候使用attr，什么时候使用prop？？
+1.添加属性名称该属性就会生效应该使用prop.
+2.是有true,false两个属性使用prop.
+3.其他则使用attr
+
+用data()获取id的值
+<a href="javascript:;" class="active J_menuTab" data-id="/travelQRC/qr/basic">首页</a>
+alert($(".J_menuTab").data("id"));
+
+$(selector).each(function(index,element))
+index - 选择器的 index 位置
+element - 当前的元素（也可使用 "this" 选择器）
+
+on() 和 click() 的区别:
+二者在绑定静态控件时没有区别，但是如果面对动态产生的控件，只有 on() 能成功的绑定到动态控件中。
+以下实例中原先的 HTML 元素点击其身后的 Delete 按钮就会被删除。而动态添加的 HTML 元素，使用 click() 这种写法，点击 Delete 按钮无法删除；使用 On() 方式可以。
+http://www.runoob.com/jquery/event-on.html
+
+window.location 对象所包含的属性
+属性	描述
+hash	从井号 (#) 开始的 URL（锚）
+host	主机名和当前 URL 的端口号
+hostname	当前 URL 的主机名
+href	完整的 URL
+pathname	当前 URL 的路径部分
+port	当前 URL 的端口号
+protocol	当前 URL 的协议
+search	从问号 (?) 开始的 URL（查询部分）
+
+jquery off() 方法通常用于移除通过 on() 方法添加的事件处理程序。
+
+要注意页面加载顺序！！！
+
+js对象要转成jquery对象才能用jquery的方法
+
+label:点击文本标记之一，就可以触发相关控件
+
+$( " li " ).map( function(  ){
+        return  $(this).text(  );   
+    } ).get(  ).join("%")   
+map()之后还不是真正的数组，要get()一下	
+
+不让浏览器缓存的方法：在src后面加个时间，这样缓存就不起作用了
+
+jcaptcha验证码实现：https://blog.csdn.net/qdqht2009/article/details/50246357
+
+连接mysql要记得安装connector/J，在musql连接的properties里
+
+不是行高line-height与文字高height一样就能让文字居中，而是应该这样理解，字符本来就在行高内垂直居中了，只是行高与文字的盒子高度不等，导致不能在盒子里垂直居中，如果我们把行高line-height与盒子的height设置为一样大，意思就是行高的平行线与盒子的上下边重合了，这时字符当然仍是在行高内垂直居中，但也顺便在盒子内垂直居中。
+
+$('input[name="onecheck"]:not(:checked)')选择未选中的
+
+left是配合position:absolute;用的,当块级元素赋予position:absolute;属性后,left就是相对第一个position:relative;的父层而言的.
+
+复制到剪贴板
+<script type="text/javascript">
+function copyUrl2(){
+var Url2=document.getElementById("biao1");
+Url2.select(); // 选择对象
+document.execCommand("Copy"); // 执行浏览器复制命令
+}
+</script>
+<textarea cols="20" rows="10" id="biao1">用户定义的代码区域</textarea>
+<input type="button" onClick="copyUrl2()" value="点击复制代码" />
+
+环境变量： ~/.bash_profile
+zkServer.sh start
+kafka-server-start.sh $KAFKA_HOME/config/server.properties
+kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partition 1 --topic test
+kafka-topics.sh --list --zookeeper localhost:2181
+kafka-console-producer.sh --broker-list localhost:9092 --topic test
+kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
+kafka-topics.sh --describe --zookeeper localhost:2181
+
+
+启动flume：
+flume-ng agent --name avro-memory-kafka --conf $FLUME_HOME/conf --conf-file $FLUME_HOME/conf/avro-memory-kafka.conf -Dflume.root.logger=INFO,console
+
+flume-ng agent --name exec-memory-avro --conf $FLUME_HOME/conf --conf-file $FLUME_HOME/conf/exec-memory-avro.conf -Dflume.root.logger=INFO,console
+
+echo hellospark >> data/data.log
+
+kafka先启动后，开启消费者来查看结果
+kafka-console-consumer.sh --zookeeper localhost:2181 --topic hello_topic --from-beginning
+
+记得配置windows机器上的hosts，不然kafka那边传过来的是server.properties里面配置的host.name=hadoop000(或者这里直接配成192.168.171.130也行)，否则连不上kafka   
+192.168.171.130  hadoop000
+
+hdfs 端口50070
+
+yarn 端口8088
+
+start-hbase.sh
+hbase 端口60010
+
+spark的安装要自己编译
+spark-shell --master local[2]
+spark 端口4040，8080
+
+thriftserver 端口 10000
+
+var file = spark.sparkContext.textFile("file:///home/hadoop/data/wc.txt")
+val wordCounts = file.flatMap(line=>line.split(",")).map((word=>(word,1))).reduceByKey(_+_)
+wordCounts.collect
+
+
+启动master节点：./sbin/start-master.sh 
+启动woker节点：./sbin/start-slave.sh spark://hadoop000:7077 (不指定master的地址会报错)
+spark-shell –master spark://hadoop000:7077
+单机提交Spark自带测试作业：计算PI 
+命令：spark-submit --class org.apache.spark.examples.SparkPi --master spark://hadoop000:7077 examples/jars/spark-examples_2.11-2.2.0.jar 100
+
+//注意中文和英文的-！！！还有不要多一个或少一个空格
+
+//尝试自己写的spark命令
+spark-submit --class com.pubinfo.App --master spark://hadoop000:7077 /home/hadoop/app/spark-2.2.0-bin-2.6.0-cdh5.7.0/examples/src/main/resources/bigdata-1.0-SNAPSHOT.jar /home/hadoop/app/spark-2.2.0-bin-2.6.0-cdh5.7.0/examples/src/main/resources/people.json
+
+hive数据为空是因为建表的时候没有指定分隔符
+create table name (id int, name string,age int) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+load data local inpath '/home/hadoop/data/name.txt' into table name;加载数据
+
+hive-site.xml中的配置文件：
+	<configuration>
+		<property>
+			<name>javax.jdo.option.ConnectionUserName</name>
+			<value>root</value>
+		</property>
+		<property>
+			<name>javax.jdo.option.ConnectionPassword</name>密码
+			<value>root</value>
+		</property>
+		<property>
+			<name>javax.jdo.option.ConnectionURL</name>mysql
+			<value>jdbc:mysql://localhost:3306/hive?createDatabaseIfNotExist=true</value>
+		</property>
+		<property>
+			<name>javax.jdo.option.ConnectionDriverName</name>mysql驱动程序
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+	</configuration>
+
+spark操作hive
+SPARK_HOME/conf 目录下创建 hive-site.xml，并且启动spark-shell的时候要--jars 把mysql的驱动包指定一下
+<configuration>
+	<property>
+		<name>javax.jdo.option.ConnectionUserName</name>
+		<value>root</value>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionPassword</name>密码
+		<value>root</value>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionURL</name>mysql
+		<value>jdbc:mysql://localhost:3306/hive?createDatabaseIfNotExist=true</value>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionDriverName</name>mysql驱动程序
+		<value>com.mysql.jdbc.Driver</value>
+	</property>
+</configuration>
+还要把mysql的驱动包放在lib下
+启动spark-shell --master spark://hadoop000:7077 --jars ~/software/mysql-connector-java-5.1.27-bin.jar
+
+如果是spark-sql --master spark://hadoop000:7077 --jars ~/software/mysql-connector-java-5.1.27-bin.jar启动的话，直接写sql语句就行了
+
+命令：
+spark.sql("show tables").show
+spark.sql("select * from name").show
+
+sparkSession访问hive的代码：
+import org.apache.spark.sql.SparkSession
+val spark: SparkSession = SparkSession.builder.appName("My Spark Application").master("local[*]").enableHiveSupport().config("spark.sql.warehouse.dir", "target/spark-warehouse").getOrCreate
+spark.sql("select * from name").collect().foreach(println)
+
+spark-shell默认的sparkSession是spark，这句话就行了
+spark.sql("select * from name").collect().foreach(println)
+
+./sbin/start-thriftserver.sh --master spark://hadoop000:7077 --jars ~/software/mysql-connector-java-5.1.27-bin.jar
+jps -m输出main method的参数 
+
+./bin/beeline -u jdbc:hive2://localhost:10000 -n hadoop(用户名)
+
+thriftserver和普通spark-shell/spark-sql的区别：
+1.每一个spark-shell/spark-sql都是一个spark application,thriftserver只有在启动的时候才申请资源,后来再启动beeline都不需要额外申请资源
+2.thriftserver可以缓存之前已经查过的表
+
+代码实现连接thriftserver
+	def main(args: Array[String]): Unit = {
+		Class.forName("org.apache.hive.jdbc.HiveDriver")
+		val connection = DriverManager.getConnection("jdbc:hive2://192.168.171.130:10000","hadoop","")
+		val statement = connection.prepareStatement("select * from name")
+		val set = statement.executeQuery()
+		while (set.next()) {
+		  println("id:"+set.getInt("id")+"name:"+set.getString("name")+"age:"+set.getInt("age"))
+		}
+	}
+
+//json转成dataFrame，进行操作
+val sparkSession = SparkSession.builder().master("spark://192.168.171.130:7077").appName("UnderstandingSparkSession").getOrCreate();
+val people = sparkSession.read.format("json").load(path)
+people.select(people.col("name"),(people.col("age")+10).as("age2")).show
+people.filter(people.col("age")>19).show
+people.where(people.col("age")>19).show
+people.groupBy("age").count().show
+
+
+
+//先编写样例类，反射的方法把rdd转成dataFrame
+val sparkSession = SparkSession.builder().master("spark://192.168.171.130:7077").appName("UnderstandingSparkSession").getOrCreate();
+val rdd = sparkSession.sparkContext.textFile("file:///.......")
+
+//隐式转换，要先编写样例类
+import spark.implicits._
+val infoDF = rdd.map(_.split(",")).map(line => Info(line(0).toInt,line(1),line(2).toInt)).toDF()
+
+//可以操作dataFrame
+infoDF.filter(people.col("age")>19).show
+
+//建立临时表，可以使用sql操作
+infoDF.createOrReplaceTempView("infos")
+spark.sql("select * from infos where age > 19").show
+
+spark.stop
+
+//要先编写样例类
+case class Info(id:Int,name:String ,age:Int)
+
+
+
+//第二种方法
+val sparkSession = SparkSession.builder().master("spark://192.168.171.130:7077").appName("UnderstandingSparkSession").getOrCreate();
+
+val rdd = sparkSession.sparkContext.textFile("file:///.......")
+
+//分别把数据和结构指定，再进行合并
+val infoRDD = rdd.map(_.split(",")).map(line => Row(line(0).toInt,line(1),line(2).toInt))
+val structType = StructType(Array(StructField("id",IntegerType,true),StructField("name",StringType,true),StructField("age",IntegerType,true)))
+val infoDF = sparkSession.createDataFrame(infoRDD,structType)
+
+infoDF.show
+
+//可以操作dataFrame
+infoDF.filter(people.col("age")>19).show
+
+//建立临时表，可以使用sql操作
+infoDF.createOrReplaceTempView("infos")
+spark.sql("select * from infos where age > 19").show
+
+spark.stop
+
+//dataFrame排序
+infoDF.sort(infoDF.col("age")).show
+
+//或者直接这样，这个底层是用apply方法，对.col()的封装	dataFrame有个这个方法：def apply(colName: String): Column = col(colName)
+infoDF.sort(infoDF("age")).show
+
+//可以传多个
+people.sort(people.col("").desc,people.col("").desc,people.col("").desc)
+
+//join
+people.join(people,people.col("id")===people.col("id"),"left").show()
+
+import spark.implicits._
+$"id"相当于people.col("id")
+
+//转成dataSet
+import spark.implicits._
+val dataFrame = sparkSession.read.option("header",true).csv("")
+val dataSet = dataFrame.as[泛型case class]
+
+每次查到的数据都缓存在dataFrame中，所以不同数据源可以从两个不同数据源中读取数据放在两个dataFrame中，然后把这两个合起来查，再写出去
+val hiveDF = spark.sql("select * from name")
+val jdbcDF = spark.read.format("jdbc").option("url", "jdbc:mysql://hadoop000:3306").option("dbtable", "hive.mysqlname").option("user", "root").option("password", "root").option("driver", "com.mysql.jdbc.Driver").load()
+val resultDF = hiveDF.join(jdbcDF,hiveDF.col("id")===jdbcDF.col("id"))
+resultDF.show
+//dataSet在编译的时候就可以发现错误了
+//dataSet相当于把dataFrame封装为一个对象
+spark.sql("select itemId from people").show		sql()操作临时表，或者hive里面的表，返回dataFrame,dataFrame相当于一个表
+dataFrame.select("itemId").show					操作dataFrame，返回dataFrame
+dataSet.map(line => line.itemId).show			操作dataSet，返回dataSet
+
+rdd相当于一行一行，它的泛型相当于是每一行是什么，如果泛型是String，就是一整行是string
+dataFrame相当于表
+dataSet的每一行相当于一个对象
+
+//读
+val people = sparkSession.read.format("json").load(path)
+//写			//指定分区							//在文件夹中附加在后面
+people.select("").coalesce(1).write.format("parquet").mode(SaveMode.Append).partitionBy("day").format("json").save("file:///.......")
+//写成表								//存到hive
+spark.sql("select * from name").write.saveAsTable("temp_table2")
+
+//读mysql中的数据
+val jdbcDF = spark.read.format("jdbc").option("url", "jdbc:mysql://hadoop000:3306").option("dbtable", "hive.mysqlname").option("user", "root").option("password", "root").option("driver", "com.mysql.jdbc.Driver").load()
+  
+//写mysql中的数据
+jdbcDF.write.format("jdbc").option("url", "jdbc:mysql://hadoop000:3306").option("dbtable", "hive.mysqlname").option("user", "root").option("password", "root").option("driver", "com.mysql.jdbc.Driver").save()
+
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Specified key was too long; max key length is 767 bytes
+更改表编码：
+MariaDB [hive]> alter table PARTITIONS convert to character set latin1;
+Query OK, 0 rows affected (0.01 sec)              
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hive]> alter table PARTITION_KEYS convert to character set latin1;
+Query OK, 1 row affected (0.00 sec)               
+Records: 1  Duplicates: 0  Warnings: 0
+
+再次在hive命令行执行
+hive> alter table originallogs add partition (logdate='20151107') location '/cmslogs/20151107/46_log/';
+OK
+Time taken: 0.249 seconds
+已经解决。 
+
+从hdfs上获取数据
+val txt = spark.sparkContext.textFile("hdfs://hadoop000:8020/data/name.txt")
+txt.take(20).foreach(println)
+txt.collect.foreach(println)
+
+
+
+ZeroMQ小而美，RabbitMQ大而稳，Kakfa和RocketMQ快而强劲
+
+
+sql优化：写在本子上了
+
+io   nio   aio区别
+同步异步指的是用户进程要不要停住等待事件的执行，阻塞非阻塞指的是线程要不要停住等待用户进程执行不需要线程的工作
+
+
+lock和synchronized的同步区别与选择
+区别如下： 
+1. lock是一个接口，而synchronized是java的一个关键字，synchronized是内置的语言实现；（具体实现上的区别在《Java虚拟机》中有讲解底层的CAS不同，以前有读过现在又遗忘了。） 
+2. synchronized在发生异常时候会自动释放占有的锁，因此不会出现死锁；而lock发生异常时候，不会主动释放占有的锁，必须手动unlock来释放锁，可能引起死锁的发生。（所以最好将同步代码块用try catch包起来，finally中写入unlock，避免死锁的发生。） 
+3. lock等待锁过程中可以用interrupt来终端等待，而synchronized只能等待锁的释放，不能响应中断； 
+4. lock可以通过trylock来知道有没有获取锁，而synchronized不能； 
+5. Lock可以提高多个线程进行读操作的效率。（可以通过readwritelock实现读写分离）
+1、等待可中断：当持有锁的线程长期不释放锁时，正在等待的线程可以选择放弃等待，改为处理其他事情，它对处理执行时间非常上的同步块很有帮助。而在等待由synchronized产生的互斥锁时，会一直阻塞，是不能被中断的。
+    2、可实现公平锁：多个线程在等待同一个锁时，必须按照申请锁的时间顺序排队等待，而非公平锁则不保证这点，在锁释放时，任何一个等待锁的线程都有机会获得锁。synchronized中的锁时非公平锁，ReentrantLock默认情况下也是非公平锁，但可以通过构造方法ReentrantLock（ture）来要求使用公平锁。
+   3、锁可以绑定多个条件：ReentrantLock对象可以同时绑定多个Condition对象（名曰：条件变量或条件队列），而在synchronized中，锁对象的wait（）和notify（）或notifyAll（）方法可以实现一个隐含条件，但如果要和多于一个的条件关联的时候，就不得不额外地添加一个锁，而ReentrantLock则无需这么做，只需要多次调用newCondition（）方法即可。而且我们还可以通过绑定Condition对象来判断当前线程通知的是哪些线程（即与Condition对象绑定在一起的其他线程）。
+
+互斥同步最主要的问题就是进行线程阻塞和唤醒所带来的性能问题，因而这种同步又称为阻塞同步，它属于一种悲观的并发策略，即线程获得的是独占锁。独占锁意味着其他线程只能依靠阻塞来等待线程释放锁。而在CPU转换线程阻塞时会引起线程上下文切换，当有很多线程竞争锁的时候，会引起CPU频繁的上下文切换导致效率很低。synchronized采用的便是这种并发策略。
+随着指令集的发展，我们有了另一种选择：基于冲突检测的乐观并发策略，通俗地讲就是先进性操作，如果没有其他线程争用共享数据，那操作就成功了，如果共享数据被争用，产生了冲突，那就再进行其他的补偿措施（最常见的补偿措施就是不断地重拾，直到试成功为止），这种乐观的并发策略的许多实现都不需要把线程挂起，因此这种同步被称为非阻塞同步。ReetrantLock采用的便是这种并发策略。
+
+想要知道热部署的原理，必须要了解java类的加载过程。一个java类文件到虚拟机里的对象，要经过如下过程。
+首先通过java编译器，将java文件编译成class字节码，类加载器读取class字节码，再将类转化为实例，对实例newInstance就可以生成对象。
+类加载器ClassLoader功能，也就是将class字节码转换到类的实例。
+在java应用中，所有的实例都是由类加载器，加载而来。
+一般在系统中，类的加载都是由系统自带的类加载器完成，而且对于同一个全限定名的java类（如com.csiar.soc.HelloWorld），只能被加载一次，而且无法被卸载。
+这个时候问题就来了，如果我们希望将java类卸载，并且替换更新版本的java类，该怎么做呢？
+
+！！！既然在类加载器中，java类只能被加载一次，并且无法卸载。那是不是可以直接把类加载器给换了？答案是可以的，我们可以自定义类加载器，并重写ClassLoader的findClass方法。想要实现热部署可以分以下三个步骤：
+1、销毁该自定义ClassLoader
+2、更新class类文件
+3、创建新的ClassLoader去加载更新后的class类文件。
+https://www.2cto.com/kf/201803/733302.html
+
+
+BIO NIO AIO的代码https://blog.csdn.net/anxpp/article/details/51512200
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
