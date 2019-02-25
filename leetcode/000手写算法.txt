@@ -1,0 +1,210 @@
+翻转链表，二分查找，最大公约数，8大算法，3种遍历，KMP,LRU,生产者消费者
+插入排序
+public static void InsertSort(int[] arr){
+    int i, j, target;
+    for (i = 1; i < arr.length; i++){
+        target = arr[i];
+		j = i;
+        while (j >= 1 && target < arr[j - 1]){
+            arr[j] = arr[j - 1];
+            j--;
+        }
+        arr[j] = target;
+    }
+}
+
+希尔排序
+public void sort(int[] arr) {
+	int i, j, r, target;
+	for(r = arr.length / 2; r >= 1; r = r / 2) {
+		for(i = r; i < arr.length; i++) {
+			target = arr[i];
+			j = i;
+			while(j >= r && target < arr[j-r]) {
+				arr[j] = arr[j-r];
+				j -= r;
+			}
+			arr[j] = target;
+		}
+	}
+}
+
+堆排序
+public void Sort(int[] list) {
+	for (int i = list.length / 2; i >= 0; i--) {
+		HeapAdjust(list, i, list.length - 1);
+	}
+	for (int i = list.length - 1; i > 0; i--) {
+		int temp = list[i];
+		list[i] = list[0];
+		list[0] = temp;
+		HeapAdjust(list, 0, i);
+	}
+}
+public void HeapAdjust(int[] array, int parent, int length) {
+	int temp = array[parent]; // temp保存当前父节点
+	int child = 2 * parent + 1; // 先获得左孩子
+	while (child < length) {
+		if (child + 1 < length && array[child] < array[child + 1]) {
+			child++;
+		}
+		if (temp >= array[child])
+			break;
+		array[parent] = array[child];
+		parent = child;
+		child = 2 * child + 1;
+	}
+	array[parent] = temp;
+}
+
+归并
+public static int[] sort(int[] a,int low,int high){
+	int mid = (low+high)/2;
+	if(low<high){
+		sort(a,low,mid);
+		sort(a,mid+1,high);
+		//左右归并
+		merge(a,low,mid,high);
+	}
+	return a;
+}
+public static void merge(int[] a, int low, int mid, int high) {
+	int[] temp = new int[high-low+1];
+	int i= low;
+	int j = mid+1;
+	int k=0;
+	// 把较小的数先移到新数组中
+	while(i<=mid && j<=high){
+		if(a[i]<a[j]){
+			temp[k++] = a[i++];
+		}else{
+			temp[k++] = a[j++];
+		}
+	}
+	// 把左边剩余的数移入数组 
+	while(i<=mid){
+		temp[k++] = a[i++];
+	}
+	// 把右边边剩余的数移入数组
+	while(j<=high){
+		temp[k++] = a[j++];
+	}
+	// 把新数组中的数覆盖nums数组
+	for(int x=0;x<temp.length;x++){
+		a[x+low] = temp[x];
+	}
+}
+	
+快排
+public static void sort(int[] array,int lo ,int hi){
+	if(lo>=hi){
+		return ;
+	}
+	int index=partition(array,lo,hi);
+	sort(array,lo,index-1);
+	sort(array,index+1,hi); 
+}
+public static int partition(int []array,int lo,int hi){
+	//固定的切分方式
+	int key=array[lo];
+	while(lo<hi){
+		while(array[hi]>=key&&hi>lo){//从后半部分向前扫描
+			hi--;
+		}
+		array[lo]=array[hi];
+		while(array[lo]<=key&&hi>lo){从前半部分向后扫描
+			lo++;
+		}
+		array[hi]=array[lo];
+	}
+	array[hi]=key;
+	return hi;
+}
+
+先序遍历
+public void preorderTraverse(Node root) {
+	Stack<Node> stack = new Stack<>();
+	Node p = root;
+	while (p != null || !stack.isEmpty()) {
+		if (p != null) {
+			visit(p);
+			stack.push(p);
+			p = p.left;
+		} else {
+			Node node = stack.pop();
+			p = node.right;
+		}
+	}
+}​​
+
+中序遍历
+public void preorderTraverse(Node root) {
+	Stack<Node> stack = new Stack<>();
+	Node p = root;
+	while (p != null || !stack.isEmpty()) {
+		if (p != null) {
+			stack.push(p);
+			p = p.left;
+		} else {
+			p = stack.pop();
+			visit(p);
+			p = p.right;
+		}
+	}
+}​​
+
+后序遍历
+public void preorderTraverse(Node root) {
+	Stack<Node> stack = new Stack<>();
+	Node p = root;
+	Node last = null;
+	while (p != null || !stack.isEmpty()) {
+		if (p != null) {
+			stack.push(p);
+			p = p.left;
+		} else {
+			p = stack.peek();
+			if(p.right!=null && p.right!= last){
+				p = p.right;
+			}else{
+				visit(p);
+				last = p;
+				stack.pop();
+				p=null;
+			}
+		}
+	}
+}​​
+
+KMP
+public class KMP {
+    public static int kmp(String str, String dest,int[] next){//str文本串  dest 模式串
+        for(int i = 0, j = 0; i < str.length(); i++){
+            while(j > 0 && str.charAt(i) != dest.charAt(j)){
+                j = next[j - 1];
+            }
+            if(str.charAt(i) == dest.charAt(j)){
+                j++;
+            }
+            if(j == dest.length()){
+                return i-j+1;
+            }
+        }
+        return -1;
+    }
+    public static int[] kmpnext(String dest){
+        int[] next = new int[dest.length()];
+        next[0] = 0;
+        for(int i = 1,j = 0; i < dest.length(); i++){
+            while(j > 0 && dest.charAt(j) != dest.charAt(i)){
+                j = next[j - 1];
+            }
+            if(dest.charAt(i) == dest.charAt(j)){
+                j++;
+            }
+			//找到next[i]的位置
+            next[i] = j;
+        }
+        return next;
+    }
+}
