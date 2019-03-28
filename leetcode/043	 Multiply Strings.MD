@@ -10,7 +10,8 @@ public String multiply(String num1, String num2) {
             int sum = mul + pos[p2];
 
             pos[p1] += sum / 10;
-            pos[p2] = (sum) % 10;
+            //这里用等号是因为前面已经加上pos[p2]的值了
+            pos[p2] = sum % 10;
         }
     }  
     
